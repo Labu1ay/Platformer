@@ -34,15 +34,15 @@ public class PlayerMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float speedMultiplier = 1f;//переменная нужна для ограничения скорости в прыжке
-        if(Grounded == false)
+        float speedMultiplier = 1f;//a variable is needed to limit the speed in a jump
+        if (Grounded == false)
         {
             speedMultiplier = 0.2f;
         }
 
 
-        //т.к. скорость игрока в воздухе ничто не ограничивает вводим ограничения по максимальной скорости
-        if(Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
+        //because nothing limits the speed of the player in the air; we introduce restrictions on the maximum speed
+        if (Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
         {
             speedMultiplier = 0f;
         } 
@@ -53,7 +53,7 @@ public class PlayerMove : MonoBehaviour
 
         Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed * speedMultiplier, 0f, 0f, ForceMode.VelocityChange);
 
-        if (Grounded)//если игрок на земле -> применяем силу сопротивления
+        if (Grounded)//if the player is on the ground -> apply resistance force
         {
             Rigidbody.AddForce(-Rigidbody.velocity.x * Friction, 0f, 0f, ForceMode.VelocityChange);
         }
