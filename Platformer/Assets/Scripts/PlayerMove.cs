@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     public float Friction;
     public bool Grounded;
 
+    public float MaxSpeed;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -22,9 +23,27 @@ public class PlayerMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed, 0f, 0f, ForceMode.VelocityChange);
+        float speedMultiplier = 1f;
+        if(Grounded == false)
+        {
+            speedMultiplier = 0.2f;
+        }
 
-        Rigidbody.AddForce(-Rigidbody.velocity.x * Friction, 0f, 0f, ForceMode.VelocityChange);
+        if(Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
+        {
+            speedMultiplier = 0f;
+        } 
+        if(Rigidbody.velocity.x < -MaxSpeed && Input.GetAxis("Horizontal") < 0)
+        {
+            speedMultiplier = 0f;
+        }
+
+        Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed * speedMultiplier, 0f, 0f, ForceMode.VelocityChange);
+
+        if (Grounded)
+        {
+            Rigidbody.AddForce(-Rigidbody.velocity.x * Friction, 0f, 0f, ForceMode.VelocityChange);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
