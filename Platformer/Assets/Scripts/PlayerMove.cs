@@ -11,11 +11,22 @@ public class PlayerMove : MonoBehaviour
     public bool Grounded;
 
     public float MaxSpeed;
+
+    public Transform CapsuleTransform;
     private void Update()
     {
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Grounded == false)
+        {
+            CapsuleTransform.localScale = Vector3.Lerp(CapsuleTransform.localScale, new Vector3(1f, 0.5f, 1f), Time.deltaTime * 15f);
+        }
+        else
+        {
+            CapsuleTransform.localScale = Vector3.Lerp(CapsuleTransform.localScale, new Vector3(1f, 1f, 1f), Time.deltaTime * 15f);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Grounded)
+                if (Grounded)
             {
                 Rigidbody.AddForce(0f, JumpSpeed, 0f, ForceMode.VelocityChange);
             }
@@ -23,12 +34,14 @@ public class PlayerMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float speedMultiplier = 1f;
+        float speedMultiplier = 1f;//переменная нужна для ограничения скорости в прыжке
         if(Grounded == false)
         {
             speedMultiplier = 0.2f;
         }
 
+
+        //т.к. скорость игрока в воздухе ничто не ограничивает вводим ограничения по максимальной скорости
         if(Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
         {
             speedMultiplier = 0f;
@@ -40,7 +53,7 @@ public class PlayerMove : MonoBehaviour
 
         Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed * speedMultiplier, 0f, 0f, ForceMode.VelocityChange);
 
-        if (Grounded)
+        if (Grounded)//если игрок на земле -> применяем силу сопротивления
         {
             Rigidbody.AddForce(-Rigidbody.velocity.x * Friction, 0f, 0f, ForceMode.VelocityChange);
         }
