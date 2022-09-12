@@ -8,8 +8,9 @@ public class Pointer : MonoBehaviour
     public Camera Camera;
     public Transform PlayerBody;
     public float LerpRate;
-    void Update()
+    void LateUpdate()
     {
+                                                            //with the help of the ray the sight is aim
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 50f, Color.yellow);
         Plane plane = new Plane(-Vector3.forward, Vector3.zero);
@@ -19,10 +20,12 @@ public class Pointer : MonoBehaviour
         Vector3 point = ray.GetPoint(distance);
         Aim.position = point;
 
+                                                        //needed to rotate gun in plane Z
         Vector3 toAim = Aim.position - transform.position;
         transform.rotation = Quaternion.LookRotation(toAim);
 
-        if(toAim.x > 0f)
+                        //with the help of this check, we turn the player towards the aim
+        if (toAim.x > 0f)
         {
             PlayerBody.rotation = Quaternion.Lerp(PlayerBody.rotation, Quaternion.Euler(0f, -45f, 0f), Time.deltaTime * LerpRate);
         }

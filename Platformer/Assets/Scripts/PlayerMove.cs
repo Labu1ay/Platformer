@@ -38,18 +38,20 @@ public class PlayerMove : MonoBehaviour
         if (Grounded == false)
         {
             speedMultiplier = 0.2f;
+
+                                                                            //because nothing limits the speed of the player in the air; we introduce restrictions on the maximum speed
+            if (Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
+            {
+                speedMultiplier = 0f;
+            }
+            if (Rigidbody.velocity.x < -MaxSpeed && Input.GetAxis("Horizontal") < 0)
+            {
+                speedMultiplier = 0f;
+            }
         }
 
 
-        //because nothing limits the speed of the player in the air; we introduce restrictions on the maximum speed
-        if (Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
-        {
-            speedMultiplier = 0f;
-        } 
-        if(Rigidbody.velocity.x < -MaxSpeed && Input.GetAxis("Horizontal") < 0)
-        {
-            speedMultiplier = 0f;
-        }
+       
 
         Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed * speedMultiplier, 0f, 0f, ForceMode.VelocityChange);
 
