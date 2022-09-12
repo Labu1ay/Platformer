@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int Health;
+    public int Health = 1;
+
+    public UnityEvent EventOnTakeDamage;
 
     public void TakeDamage(int valueDamage)
     {
@@ -13,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
+        EventOnTakeDamage.Invoke();
     }
 
     public void Die()
