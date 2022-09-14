@@ -6,7 +6,7 @@ public class RotateToPlayer : MonoBehaviour
 {
     public Vector3 LeftEuler;
     public Vector3 RightEuler;
-    public float LerpRate;
+    public float LerpRate = 7f;
 
     private Transform _playerTransform;
     private Vector3 _targetEuler;

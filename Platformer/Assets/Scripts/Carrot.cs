@@ -10,6 +10,7 @@ public class Carrot : MonoBehaviour
 
     void Start()
     {
+        transform.rotation = Quaternion.identity;
         _playerTransform = FindObjectOfType<PlayerHealth>().transform;
         Vector3 toPlayer = (_playerTransform.position - transform.position).normalized;
         Rigidbody.velocity = toPlayer * Speed;

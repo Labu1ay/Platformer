@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnCarrot
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -149,8 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2105ba949434601409b0a9c25256d9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackPeriod: 7
-  RabbitAnim: {fileID: 598705521123172283}
+  Period: 4
+  Anim: {fileID: 598705521123172283}
+  NameAnim: Attack
 --- !u!114 &598705521727669709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHealth: {fileID: 598705521727669711}
+  DieOnAnyCollision: 0
 --- !u!114 &4849646916960420933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27509f63bd660d4cb334e57385d39b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageValue: 2
+  DamageValue: 1
 --- !u!1 &6800031112616990573
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828919f1dcee17a4b837493227a4fe2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarrotPrefab: {fileID: 6978257474012888128, guid: 7ab199f26b544434483c8cf7c734165a, type: 3}
+  Prefab: {fileID: 6978257474012888128, guid: 7ab199f26b544434483c8cf7c734165a, type: 3}
   Spawn: {fileID: 598705520992350155}
 --- !u!4 &1136523399218519480 stripped
 Transform:

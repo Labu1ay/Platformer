@@ -11,12 +11,18 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         _playerTransform = FindObjectOfType<PlayerHealth>().transform;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        transform.rotation = Quaternion.LookRotation(toPlayer());
     }
     void Update()
     {
         transform.position += Time.deltaTime * transform.forward * Speed;
-        Vector3 toPlayer = _playerTransform.position - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(toPlayer, Vector3.forward);
+        Quaternion targetRotation = Quaternion.LookRotation(toPlayer(), Vector3.forward);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * SpeedRotation);
     }
+    Vector3 toPlayer()
+    {
+        return _playerTransform.position - transform.position;
+    }
+    
 }
