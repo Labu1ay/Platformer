@@ -12,6 +12,7 @@ public class JumpGun : MonoBehaviour
     public float MaxCharge = 3f;
     private float _currentCharge;
     private bool _isCharged;
+    public ChargeIcon ChargeIcon;
 
     private void Update()
     {
@@ -23,14 +24,17 @@ public class JumpGun : MonoBehaviour
                 Pistol.Shot();
                 _isCharged = false;
                 _currentCharge = 0f;
+                ChargeIcon.StartCharge();
             }
         }
         else
         {
             _currentCharge += Time.deltaTime;
+            ChargeIcon.SetChargeValue(_currentCharge, MaxCharge); 
             if(_currentCharge >= MaxCharge)
             {
                 _isCharged = true;
+                ChargeIcon.StopCharge();
             }
         }
     }
