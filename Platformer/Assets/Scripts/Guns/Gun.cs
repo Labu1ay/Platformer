@@ -15,8 +15,7 @@ public class Gun : MonoBehaviour
     public GameObject Flash;
     private void Update()
     {
-        _timer += Time.deltaTime;
-
+        _timer += Time.unscaledDeltaTime;
 
         if (_timer > ShotPeriod)
         {
