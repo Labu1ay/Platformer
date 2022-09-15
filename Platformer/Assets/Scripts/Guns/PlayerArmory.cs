@@ -23,8 +23,13 @@ public class PlayerArmory : MonoBehaviour
             }
             else
             {
-                Guns[i].Diactivate();
+                Guns[i].Deactivate();
             }
         }
+    }
+
+    public void AddBullets(int gunIndex, int numberOfBullets)
+    {
+        Guns[gunIndex].AddBullets(numberOfBullets);
     }
 }
