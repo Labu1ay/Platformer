@@ -10,6 +10,8 @@ public class Hook : MonoBehaviour
     public Collider Collider;
     public Collider PlayerCollider;
 
+    public RopeGun RopeGun;
+
     private void Start()
     {
         Physics.IgnoreCollision(Collider, PlayerCollider);
@@ -24,7 +26,9 @@ public class Hook : MonoBehaviour
             {
                 _fixedJoint.connectedBody = collision.rigidbody;
             }
-          
+            RopeGun.SpringCreator();
+
+
         }
     }
 
