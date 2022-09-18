@@ -13,6 +13,8 @@ public class Gun : MonoBehaviour
 
     public AudioSource ShotSound;
     public GameObject Flash;
+
+    public ParticleSystem SmokeEffect;
     private void Update()
     {
         _timer += Time.unscaledDeltaTime;
@@ -34,6 +36,7 @@ public class Gun : MonoBehaviour
         ShotSound.Play();
         Flash.SetActive(true);
         Invoke("HideFlash", 0.08f);
+        SmokeEffect.Play();
     }
 
     void HideFlash()
