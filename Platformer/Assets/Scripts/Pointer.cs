@@ -8,6 +8,8 @@ public class Pointer : MonoBehaviour
     public Camera Camera;
     public Transform PlayerBody;
     public float LerpRate;
+
+    private float _yEuler;
     void LateUpdate()
     {
                                                             //with the help of the ray the sight is aim
@@ -24,15 +26,16 @@ public class Pointer : MonoBehaviour
         Vector3 toAim = Aim.position - transform.position;
         transform.rotation = Quaternion.LookRotation(toAim);
 
-                        //with the help of this check, we turn the player towards the aim
-        if (toAim.x > 0f)
+        //with the help of this check, we turn the player towards the aim
+        if (toAim.x < 0f)
         {
-            PlayerBody.rotation = Quaternion.Lerp(PlayerBody.rotation, Quaternion.Euler(0f, -45f, 0f), Time.deltaTime * LerpRate);
+            _yEuler = Mathf.Lerp(_yEuler, 45f, Time.deltaTime * LerpRate);
         }
         else
         {
-            PlayerBody.rotation = Quaternion.Lerp(PlayerBody.rotation, Quaternion.Euler(0f, 45f, 0f), Time.deltaTime * LerpRate);
+            _yEuler = Mathf.Lerp(_yEuler, -45f, Time.deltaTime * LerpRate);
         }
+        PlayerBody.localEulerAngles = new Vector3(0, _yEuler, 0);
 
         //RaycastHit hit;
         //if(Physics.Raycast(ray, out hit)){

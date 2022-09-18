@@ -13,6 +13,8 @@ public class PlayerMove : MonoBehaviour
     public float MaxSpeed;
 
     public Transform CapsuleTransform;
+
+    private int _jumpFrameCounter;
     private void Update()
     {
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Grounded == false)
@@ -26,12 +28,19 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-                if (Grounded)
+            if (Grounded)
             {
-                Rigidbody.AddForce(0f, JumpSpeed, 0f, ForceMode.VelocityChange);
+                Jump();
             }
         }
     }
+    public void Jump()
+    {
+        Rigidbody.AddForce(0f, JumpSpeed, 0f, ForceMode.VelocityChange);
+        _jumpFrameCounter = 0;
+       
+    }
+
     void FixedUpdate()
     {
         float speedMultiplier = 1f;//a variable is needed to limit the speed in a jump
@@ -39,7 +48,7 @@ public class PlayerMove : MonoBehaviour
         {
             speedMultiplier = 0.2f;
 
-                                                                            //because nothing limits the speed of the player in the air; we introduce restrictions on the maximum speed
+            //because nothing limits the speed of the player in the air; we introduce restrictions on the maximum speed
             if (Rigidbody.velocity.x > MaxSpeed && Input.GetAxis("Horizontal") > 0)
             {
                 speedMultiplier = 0f;
@@ -51,15 +60,23 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-       
+
 
         Rigidbody.AddForce(Input.GetAxis("Horizontal") * MoveSpeed * speedMultiplier, 0f, 0f, ForceMode.VelocityChange);
 
         if (Grounded)//if the player is on the ground -> apply resistance force
         {
             Rigidbody.AddForce(-Rigidbody.velocity.x * Friction, 0f, 0f, ForceMode.VelocityChange);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 15f);
         }
-    }
+
+        _jumpFrameCounter += 1;
+        if (_jumpFrameCounter == 2)
+        {
+            Rigidbody.freezeRotation = false;
+            Rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.VelocityChange);
+        }
+    } 
 
     private void OnCollisionStay(Collision collision)
     {
@@ -69,6 +86,7 @@ public class PlayerMove : MonoBehaviour
             if (angleToNormal < 45f)
             {
                 Grounded = true;
+                Rigidbody.freezeRotation = true;
             }
         }
     }
