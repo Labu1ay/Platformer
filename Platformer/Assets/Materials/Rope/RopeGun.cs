@@ -25,7 +25,7 @@ public class RopeGun : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Shot();
         }
